@@ -1,0 +1,5 @@
+// file  .dockerignore
+node_modules
+dist
+.idea
+.env*
