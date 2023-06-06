@@ -5,23 +5,20 @@ metadata:
   name: Infra-practice-isaac
   region: us-west-2
 
-fargateProfiles:
-  - name: fargate-default
-    selectors:
-      # All workloads in the "default" Kubernetes namespace will be
-      # scheduled onto Fargate:
-      - namespace: default
-      # All workloads in the "kube-system" Kubernetes namespace will be
-      # scheduled onto Fargate:
-      - namespace: kube-system
-  - name: fargate-app
-    selectors:
-      # All workloads in the "dev" Kubernetes namespace matching the following
-      # label selectors will be scheduled onto Fargate:
-      - namespace: app
-        labels:
-          env: app
-          checks: passed
+availabilityZones: ["us-west-2a", "us-west-2b", "us-west-2c"]
+
+managedNodeGroups:
+- name: infra-practice-nodes
+  desiredCapacity: 2 
+  instanceType: t2.micro
+  ssh:
+    enableSsm: true
+
+# To enable all of the control plane logs, uncomment below:
+# cloudWatch:
+#  clusterLogging:
+#    enableTypes: ["*"]
+
 secretsEncryption:
   # KMS key used for envelope encryption of Kubernetes secrets
   keyARN: arn:aws:kms:us-west-2:362231138751:key/bd27521d-e47e-48bc-83ba-a88263c8cd2d

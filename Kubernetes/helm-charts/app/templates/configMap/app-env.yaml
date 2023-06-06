@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+data:
+  MONGODB_URL: "mongodb://db:27017/database"
+metadata:
+  name: app-env
+  namespace: default
