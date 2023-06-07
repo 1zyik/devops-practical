@@ -9,7 +9,7 @@ availabilityZones: ["us-west-2a", "us-west-2b", "us-west-2c"]
 
 managedNodeGroups:
 - name: infra-practice-nodes
-  desiredCapacity: 2 
+  desiredCapacity: 5 
   instanceType: t2.micro
   ssh:
     enableSsm: true
