@@ -111,3 +111,35 @@ Charts for db can be found in Kubernetes > helm-charts > db
 ![alt text](screenshots/Shot%20-%204.png)
 ![alt text](screenshots/Shot%20-%205.png)
 ![alt text](screenshots/Shot%20-%206.png)
+
+### Scalability
+
+I utilized the HPA to enable memory limits and replica counts for app and db deployments. 
+
+```
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  resource:
+      targetCPUUtilizationPercentage: 80
+      targetMemoryUtilizationPercentage: 80
+```
+*Scaling kicks in when memory and cpu percentages go above 80%*
+##### The cluster was also set to have a max node size of 10 and min of 5 considering t2-micro was used to save cost. 
+
+I was also able to simulate the scaling utilizing a load generator. Commands run were: 
+
+```
+kubectl run -i --tty load-generator --image=busybox /bin/sh 
+```
+*This was used to start a busybox container*
+```
+while true; do wget -q -O- ${loadbalancersAddress}; done
+```
+*This was used to spam the app in K8s to trigger the scaling activity*
+ &nbsp;
+![](screenshots/Shot%20-%207.png)
+*Image of the app pod scaling with load increase*
+
+# Thank you...
